@@ -27,15 +27,15 @@
 + 공지사항 게시판
 <img src="https://user-images.githubusercontent.com/37521568/103907927-3fce2580-5145-11eb-97d9-f3d8c50206c2.gif" width="800" height="500">
 관리자로 로그인했을 때만 글 작성이 가능합니다. 단순한 CRUD 기능이 구현되어 있습니다.
-#
+
 + QnA 게시판
 <img src="https://user-images.githubusercontent.com/37521568/103907953-49578d80-5145-11eb-87d0-82e8c6dc8a0d.gif" width="800" height="500">
 한단계 업그레이드해서 비밀글 기능이 추가되었습니다. 관리자만 답변을 작성할 수 있고 게시글 목록에서 답변 여부를 확인할 수 있습니다.
-#
+
 + 자유 게시판
 <img src="https://user-images.githubusercontent.com/37521568/103907993-54122280-5145-11eb-8162-4aa114d97285.gif" width="800" height="500">
 댓글 기능이 추가되었습니다. 
-#
+
 #### <매물목록>
 <img src="https://user-images.githubusercontent.com/37521568/103911527-802fa280-5149-11eb-9fd9-342d6a2910b7.gif" width="800" height="500">
 메인화면에서 집보러가기를 클릭하면 매물목록을 확인할 수 있다. 검색필터와 검색어를 설정해 매물 검색이 가능하며 매물 이름을 클릭하면 주변 상권정보를 보여주고 지도에 매물 위치와 상권 위치를 띄운다. 해당 매물의 연간 거래가내역을 확인할 수 있으며 매물을 찜하여 찜목록에 넣을 수 있습니다.
