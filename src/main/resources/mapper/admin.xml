@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.AdminMapper">
+	
+	<select id="userList" resultType="MemberDTO">
+		select id, pw, name, email, grade
+		from member
+	</select>
+	
+	<update id="userModify" parameterType="MemberDTO">
+		update member
+		set grade = #{grade}
+		where id = #{id}
+	</update>
+	
+</mapper>

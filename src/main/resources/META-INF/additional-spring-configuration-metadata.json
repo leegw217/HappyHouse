@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "kakaologin.key",
+    "type": "java.lang.String",
+    "description": "A description for 'kakaologin.key'"
+  },
+  {
+    "name": "naverlogin.key",
+    "type": "java.lang.String",
+    "description": "A description for 'naverlogin.key'"
+  }
+]}

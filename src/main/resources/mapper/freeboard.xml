@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.happyhouse.model.mapper.FreeBoardMapper">
+	<!-- 게시판 -->
+	<select id="selectFreeBoard" resultType="FreeDTO">
+		select *
+		from free_board
+	</select>
+	
+	<select id="selectFreeBoardByNo" parameterType="int" resultType="FreeDTO">
+		select *
+		from free_board
+		where no = #{no}
+	</select>
+
+	<insert id="insertFreeBoard" parameterType="FreeDTO">
+		insert into free_board(writer, title, content)
+		values (#{writer}, #{title}, #{content})
+	</insert>
+	
+	<update id="updateFreeBoard" parameterType="FreeDTO">
+		update free_board
+		set title = #{title}, content = #{content}, view = #{view}
+		where no = #{no}
+	</update>
+	
+	<delete id="deleteFreeBoard" parameterType="int">
+		delete from free_board
+		where no = #{no}
+	</delete>
+	<!-- 댓글 -->
+	<select id="countComment" parameterType="int" resultType="int">
+		select count(*)
+		from free_comment
+		where bno = #{bno}
+	</select>
+	
+	<select id="selectComment" parameterType="int" resultType="FreeCommentDTO">
+		select * 
+		from free_comment
+		where bno = #{bno}
+	</select>
+	
+	<insert id="insertComment" parameterType="FreeCommentDTO">
+		insert into free_comment(bno, content, writer)
+		values (#{bno}, #{content}, #{writer})
+	</insert>
+	
+	<update id="updateComment" parameterType="FreeCommentDTO">
+		update free_comment
+		set content = #{content}
+		where no = #{no}
+	</update>
+	
+	<delete id="deleteComment" parameterType="int">
+		delete from free_comment
+		where no = #{no}
+	</delete>
+	
+</mapper>

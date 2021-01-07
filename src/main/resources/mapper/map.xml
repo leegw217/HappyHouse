@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.MapMapper">
+
+	<select id="getSido" resultType="SidoDTO">
+		select left(sido_code,2) sido_code, sido_name FROM sidocode
+        ORDER BY sido_code
+	</select>
+
+	<select id="getGugunInSido" parameterType="String" resultType="GugunDTO">
+		SELECT left(gugun_code,5) gugun_code, gugun_name FROM guguncode
+        where left(gugun_code,2) = #{sido}
+        ORDER BY gugun_code
+	</select>
+
+
+	<select id="getDongInGugun" parameterType="String" resultType="DongDTO">
+		SELECT distinct dong, code FROM houseinfo
+        where code = #{gugun} 
+        ORDER BY dong
+	</select>
+	
+	<select id="getListInDong" parameterType="String" resultType="HouseDTO">
+		select * from house
+		where dong = #{dong}
+	</select>
+	
+	<select id="getApt" parameterType="String" resultType="HouseDealDTO">
+		select * from housedeal
+		WHERE no = #{apt}
+	</select>
+	
+	<select id="getAptbyName" parameterType="String" resultType="HouseDealDTO">
+		select * from housedeal
+		WHERE AptName = #{apt}
+	</select>
+	
+	<select id="addLikeList" parameterType="LikeListDTO">
+		insert likelist(no,user)
+		values(#{no},#{user})
+	</select>
+	
+	<select id="getAll" resultType="HouseDTO">
+		select * FROM house
+        ORDER BY AptName
+	</select>
+	
+	<select id="getStorebigcode" parameterType="String" resultType="StoreDTO">
+		(select s.name storename,s.lat lat,s.lng lng,s.bigCode bigCode,c.name typename from store s inner join storesmallcode c on s.smallCode = c.id where s.address like concat('%', #{dong}, '%') and s.bigCode = 'D' group by s.smallCode limit 3)
+		union
+		(select s.name storename,s.lat lat,s.lng lng,s.bigCode bigCode,c.name typename from store s inner join storesmallcode c on s.smallCode = c.id where s.address like concat('%', #{dong}, '%') and s.bigCode = 'F' group by s.smallCode limit 3)
+		union
+		(select s.name storename,s.lat lat,s.lng lng,s.bigCode bigCode,c.name typename from store s inner join storesmallcode c on s.smallCode = c.id where s.address like concat('%', #{dong}, '%') and s.bigCode = 'L' group by s.smallCode limit 3)
+		union
+		(select s.name storename,s.lat lat,s.lng lng,s.bigCode bigCode,c.name typename from store s inner join storesmallcode c on s.smallCode = c.id where s.address like concat('%', #{dong}, '%') and s.bigCode = 'N' group by s.smallCode limit 3)
+		union
+		(select s.name storename,s.lat lat,s.lng lng,s.bigCode bigCode,c.name typename from store s inner join storesmallcode c on s.smallCode = c.id where s.address like concat('%', #{dong}, '%') and s.bigCode = 'O' group by s.smallCode limit 3)
+		union
+		(select s.name storename,s.lat lat,s.lng lng,s.bigCode bigCode,c.name typename from store s inner join storesmallcode c on s.smallCode = c.id where s.address like concat('%', #{dong}, '%') and s.bigCode = 'P' group by s.smallCode limit 3)
+		union
+		(select s.name storename,s.lat lat,s.lng lng,s.bigCode bigCode,c.name typename from store s inner join storesmallcode c on s.smallCode = c.id where s.address like concat('%', #{dong}, '%') and s.bigCode = 'Q' group by s.smallCode limit 3)
+		union
+		(select s.name storename,s.lat lat,s.lng lng,s.bigCode bigCode,c.name typename from store s inner join storesmallcode c on s.smallCode = c.id where s.address like concat('%', #{dong}, '%') and s.bigCode = 'R' group by s.smallCode limit 3)
+		union
+		(select s.name storename,s.lat lat,s.lng lng,s.bigCode bigCode,c.name typename from store s inner join storesmallcode c on s.smallCode = c.id where s.address like concat('%', #{dong}, '%') and s.bigCode = 'S' group by s.smallCode limit 3)
+	</select>
+	
+	<select id="getCulture" parameterType="String" resultType="CultureDTO">
+		(select * from culture where address like concat('%', #{dong}, '%')and genreCode = 1 order by length(name) asc limit 3)
+		union
+		(select * from culture where address like concat('%', #{dong}, '%')and genreCode = 3 order by length(name) asc limit 3)
+		union
+		(select * from culture where address like concat('%', #{dong}, '%')and genreCode = 4 order by length(name) asc limit 3)
+		union
+		(select * from culture where address like concat('%', #{dong}, '%')and genreCode = 6 order by length(name) asc limit 3)
+		union
+		(select * from culture where address like concat('%', #{dong}, '%')and genreCode = 7 order by length(name) asc limit 3)
+		union
+		(select * from culture where address like concat('%', #{dong}, '%')and genreCode = 8 order by length(name) asc limit 3)
+	</select>
+	
+	<select id="getPark" parameterType="String" resultType="ParkDTO">
+		select * from park where address like concat('%', #{dong}, '%')
+	</select>
+	
+	<select id="getMetro" parameterType="String" resultType="MetroDTO">
+		select * from metro where address like concat('%', #{dong}, '%')
+	</select>
+	
+	<select id="getSchool" parameterType="String" resultType="SchoolDTO">
+		(select count(*) count from elementaryschool where address like concat('%', #{gu}, '%') and type = '공립')
+		union all
+		(select count(*) from elementaryschool where address like concat('%', #{gu}, '%') and type = '사립')
+		union all
+		(select count(*) from elementaryschool where address like concat('%', #{gu}, '%') and type = '국립')
+		union all
+		(select count(*) from middleschool where address like concat('%', #{gu}, '%') and type = '공립')
+		union all
+		(select count(*) from middleschool where address like concat('%', #{gu}, '%') and type = '사립')
+		union all
+		(select count(*) from middleschool where address like concat('%', #{gu}, '%') and type = '국립')
+		union all
+		(select count(*) from highschool where address like concat('%', #{gu}, '%') and type = '공립')
+		union all
+		(select count(*) from highschool where address like concat('%', #{gu}, '%') and type = '사립')
+		union all
+		(select count(*) from highschool where address like concat('%', #{gu}, '%') and type = '국립')
+	</select>
+	
+	<select id="getlikelist" parameterType="String" resultType="LikeHouseDTO">
+		select a.no,b.gugun,a.dong,a.AptName,a.dealAmount,a.dealMonth,a.dealDay,a.area,a.areanew 
+		from (select l.no no, d.dong dong, d.AptName AptName, d.dealAmount dealAmount, d.dealMonth dealMonth, d.dealDay dealDay,d.area area, d.areanew areanew from likelist l inner join house d on l.no = d.no where l.user = #{id}) a 
+		left outer join baseaddress b on a.dong = b.dong
+	</select>
+	
+	<select id="getlikelistbyGugun" parameterType="String" resultType="LikeHouseDTO">
+		select a.no,b.gugun,a.dong,a.AptName,a.dealAmount,a.dealMonth,a.dealDay,a.area,a.areanew 
+		from (select l.no no, d.dong dong, d.AptName AptName, d.dealAmount dealAmount, d.dealMonth dealMonth, d.dealDay dealDay,d.area area, d.areanew areanew from likelist l inner join house d on l.no = d.no where l.user = #{id}) a 
+		left outer join baseaddress b on a.dong = b.dong 
+		where b.gugun = #{gugun}
+	</select>
+	
+</mapper>

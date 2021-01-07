@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.InterestMapper">
+
+	<select id="selectInterest" parameterType="String" resultType="InterestDTO">
+		select * 
+		from interest_area
+		where id = #{id}
+	</select>
+	
+	<select id="countInterest" parameterType="String" resultType="int">
+		select count(*)
+		from interest_area
+		where id = #{id}
+	</select>
+
+	<insert id="insertInterest" parameterType="InterestDTO">
+		insert into interest_area (id, dong)
+		values (#{id}, #{dong})
+	</insert>
+	
+	<delete id="deleteInterest" parameterType="InterestDTO">
+		delete from interest_area
+		where id = #{id} and dong = #{dong}
+	</delete>
+	
+	<select id="selectHouseByDongName" parameterType="String" resultType="HouseDTO">
+		select * from house
+		where dong = #{dongName}
+	</select>
+	
+	<select id="selectDongWithoutInterest" resultType="String">
+		select dong from dongcode where dong not in
+		<foreach collection="list" item="dong" open="(" close=")" separator=",">
+			#{dong}		
+		</foreach>
+	</select>
+	
+	<select id="countHouseByFacility" parameterType="HashMap" resultType="int">
+		select count(*) from store
+		where address like concat('%', #{dongName}, '%') 
+		<if test='!facility.equals("초등학교") and !facility.equals("중학교") and !facility.equals("고등학교")'>
+			and smallCode in
+			<choose>
+				<when test='facility.equals("수퍼마켓")'>
+					(select id from storesmallcode where name in ("수퍼마켓", "식료품점", "반찬가게"))
+				</when>
+				<when test='facility.equals("병원")'>
+					(select id from storesmallcode where name in 
+					("종합병원", "일반병원", "치과병원", "치과의원", "한의원", "내과/외과", "정형/성형외과", "비뇨기과", "안과의원", "이비인후과의원", "신경외과", "피부과"))
+				</when>
+				<when test='facility.equals("놀이방")'>
+					(select id from storesmallcode where name in ("놀이방", "실내놀이터-유아", "블럭놀이방"))
+				</when>
+				<when test='facility.equals("헬스장")'>
+					(select id from storesmallcode where name = "헬스클럽")
+				</when>
+				<when test='facility.equals("목욕탕, 사우나")'>
+					(select id from storesmallcode where name in ("욕탕업-종합", "사우나/증기탕/온천")
+				</when>
+				<when test='facility.equals("패스트푸드점")'>
+					(select id from storesmallcode where name = "패스트푸드")
+				</when>
+				<when test='facility.equals("국가고시 학원")'>
+					(select id from storesmallcode where name in ("학원/국가고시", "학원-국가고시")
+				</when>
+				<when test='facility.equals("경찰 학원")'>
+					(select id from storesmallcode where name in ("학원-경찰")
+				</when>
+				<when test='facility.equals("외국어 학원")'>
+					(select id from storesmallcode where name in ("학원-외국어/어학"))
+				</when>
+				<otherwise>
+					 (select id from storesmallcode where name like concat('%', #{facility}, '%'))
+				</otherwise>
+			</choose>
+		</if>
+	</select>
+	
+</mapper>

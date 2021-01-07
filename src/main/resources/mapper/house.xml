@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.HouseMapper">
+
+	<select id="selectHouse" parameterType="map" resultType="HouseDTO">
+		select * from house
+		<if test="dongName == null or dongName == ''">
+			<if test="word != null and word != ''">
+				<if test="key == 'AptName'">
+					where AptName like concat('%', #{word}, '%')
+				</if>
+				<if test="key == 'dealAmount'">
+					where #{word} >= cast(dealAmount as signed integer)
+				</if>
+				<if test="key == 'dealYear'">
+					where #{word} >= dealYear
+				</if>
+			</if>
+		</if> 
+		<if test="dongName != null and dongName != ''">
+			where dong like concat('%', #{dongName}, '%')
+			<if test="word != null and word !=''">
+				<if test="key == 'AptName'">
+					and AptName like concat('%', #{word}, '%')
+				</if>
+				<if test="key == 'dealAmount'">
+					and #{word} >= cast(dealAmount as signed integer)
+				</if>
+				<if test="key == 'dealYear'">
+					and #{word} >= dealYear
+				</if>
+			</if>
+		</if>
+		order by no
+		limit #{start}, 10
+	</select>
+
+	<select id="selectHouseByName" parameterType="String" resultType="HouseInfoDTO">
+		select *
+		from houseinfo
+		where AptName = #{aptName}
+	</select>
+
+	<select id="selectTotalCount" parameterType="map" resultType="int">
+		select count(*) from house
+		<if test="dongName == null or dongName == ''">
+			<if test="word != null and word != ''">
+				<if test="key == 'AptName'">
+					where AptName like concat('%', #{word}, '%')
+				</if>
+				<if test="key == 'dealAmount'">
+					where #{word} >= cast(dealAmount as signed integer)
+				</if>
+				<if test="key == 'dealYear'">
+					where #{word} >= dealYear
+				</if>
+			</if>
+		</if> 
+		<if test="dongName != null and dongName != ''">
+			where dong like concat('%', #{dongName}, '%')
+			<if test="word != null and word !=''">
+				<if test="key == 'AptName'">
+					and AptName like concat('%', #{word}, '%')
+				</if>
+				<if test="key == 'dealAmount'">
+					and #{word} >= cast(dealAmount as signed integer)
+				</if>
+				<if test="key == 'dealYear'">
+					and #{word} >= dealYear
+				</if>
+			</if>
+		</if>
+	</select>
+	
+	
+	<select id="selectHouseJson" parameterType="map" resultType="HouseDTO">
+		select * from house
+		<if test="dongName == null or dongName == ''">
+			<if test="word != null and word != ''">
+				<if test="key == 'AptName'">
+					where AptName like concat('%', #{word}, '%')
+				</if>
+				<if test="key == 'dealAmount'">
+					where #{word} >= cast(dealAmount as signed integer)
+				</if>
+				<if test="key == 'dealYear'">
+					where #{word} >= dealYear
+				</if>
+			</if>
+		</if> 
+		<if test="dongName != null and dongName != ''">
+			where dong like concat('%', #{dongName}, '%')
+			<if test="word != null and word !=''">
+				<if test="key == 'AptName'">
+					and AptName like concat('%', #{word}, '%')
+				</if>
+				<if test="key == 'dealAmount'">
+					and #{word} >= cast(dealAmount as signed integer)
+				</if>
+				<if test="key == 'dealYear'">
+					and #{word} >= dealYear
+				</if>
+			</if>
+		</if>
+		order by no
+	</select>
+	
+	<select id="getApt" parameterType="String" resultType="HouseDealDTO">
+		select *
+		from housedeal
+		where AptName = #{apt}
+	</select>
+	
+</mapper>

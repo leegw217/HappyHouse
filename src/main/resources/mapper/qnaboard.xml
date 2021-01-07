@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.QnaBoardMapper">
+
+	<select id="selectQna" resultType="QnaDTO">
+		select *
+		from qna_board
+	</select>
+	
+	<select id="selectQnaByNo" parameterType="int" resultType="QnaDTO">
+		select *
+		from qna_board
+		where no = #{no}
+	</select>
+	
+	<insert id="insertQna" parameterType="QnaDTO">
+		insert into qna_board(writer, title, content, secret)
+		values (#{writer}, #{title}, #{content}, #{secret})
+	</insert>
+	
+	<update id="updateQna" parameterType="QnaDTO">
+		update qna_board
+		set title = #{title}, content = #{content}, secret = #{secret}
+		where no = #{no}
+	</update>
+	
+	<update id="updateComment" parameterType="QnaDTO">
+		update qna_board
+		set comment = #{comment}
+		where no = #{no}
+	</update>
+	
+	<delete id="deleteQna" parameterType="int">
+		delete from qna_board
+		where no = #{no}
+	</delete>
+	
+</mapper>
