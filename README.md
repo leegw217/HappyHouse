@@ -1,4 +1,4 @@
 # HappyHouse
 아파트 정보 및 주변 상권 정보 조회 웹 서비스
 
-![Uploading 20210107170902-5dd72b6dd1.[gif-2-mp4.com].gif…]()
+![Main](https://user-images.githubusercontent.com/37521568/103902551-07771900-513e-11eb-8f72-8e163ee59df2.gif)
